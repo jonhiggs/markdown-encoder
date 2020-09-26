@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+require 'byebug'
+require 'nokogiri'
+require 'redcarpet'
+require 'base64'
+
+def embed_images
+  DOC.xpath('//img').each do |img|
+    img.attribute_nodes.each do |att|
+      if att.name == "src"
+        d = encode_image(att.value)
+        att.value = d
+      end
+    end
+  end
+end
+
+def absolute_path p
+  p = Pathname.new(p)
+  p = File.join(DOCUMENT_DIR,p) if p.relative?
+  p
+end
+
+def mime_type p
+  case p.split(".").last
+  when "jpg"
+    "image/jpeg"
+  when "png"
+    "image/png"
+  end
+end
+
+def encode_image p
+  d = Base64.encode64(File.read(absolute_path(p)))
+  return "data:#{mime_type p};base64,#{d}"
+end
+
+markdown = File.read(ARGV[0])
+html = Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(markdown)
+
+DOCUMENT_DIR = File.dirname(ARGV[0])
+DOC = Nokogiri::HTML(html)
+
+embed_images
+
+puts DOC
