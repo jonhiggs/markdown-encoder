@@ -7,13 +7,82 @@ require 'redcarpet'
 require 'base64'
 
 def embed_images
-  DOC.xpath('//img').each do |img|
+  @doc.xpath('//img').each do |img|
     img.attribute_nodes.each do |att|
       if att.name == "src"
         d = encode_image(att.value)
         att.value = d
       end
     end
+  end
+end
+
+def css
+  <<-EOF.gsub(/^\s*/,'')
+    body {
+      background-color: black;
+      color: #ccc;
+    }
+
+    #container {
+      font-family: verdana;
+      margin: auto;
+      font-size: 20;
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    pre {
+      margin-left: 20px;
+      line-height: 1.0;
+    }
+
+    code {
+      white-space: pre;
+      line-height: 1.0;
+      margin-left: 20px;
+      font-size: 18;
+    }
+
+    .picture {
+      padding: 5px;
+      padding-top: 15px;
+      background-color: #333;
+      border: 1px solid #666;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+
+    .picture img {
+      max-width: 100%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .caption {
+      color: #ccc;
+      font-size: 15;
+      text-align: center;
+    }
+
+    h1, h2, h3, h4, h5, h6, h7 {
+      line-height: 1.0;
+      color: white;
+      margin-top: 60px;
+      margin-bottom: 0px;
+    }
+  EOF
+end
+
+def decorate
+  @doc.at('body').add_previous_sibling('<head></head>')
+  @doc.at('head').add_child("<title>#{@doc.at('h1').content}</title>")
+  @doc.at('head').add_child("<style>\n#{css}\n</style>")
+  @doc.xpath("//img").each do |i|
+    i = i.wrap('<div class="picture">')
+    alt = i.attributes["alt"].value
+    i.parent.add_child('<div class="caption">' + alt + '</div>')
   end
 end
 
@@ -41,8 +110,9 @@ markdown = File.read(ARGV[0])
 html = Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(markdown)
 
 DOCUMENT_DIR = File.dirname(ARGV[0])
-DOC = Nokogiri::HTML(html)
+@doc = Nokogiri::HTML('<div id="container">' + html + '</div>')
 
 embed_images
+decorate
 
-puts DOC
+puts @doc
