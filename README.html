@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>md2html</title>
+<style>
+body {
+background-color: black;
+color: #ccc;
+}
+#container {
+font-family: verdana;
+margin: auto;
+font-size: 20;
+max-width: 600px;
+line-height: 1.8;
+}
+pre {
+margin-left: 20px;
+line-height: 1.0;
+}
+code {
+white-space: pre;
+line-height: 1.0;
+margin-left: 20px;
+font-size: 18;
+}
+.picture {
+padding: 5px;
+padding-top: 15px;
+background-color: #333;
+border: 1px solid #666;
+margin-left: 20px;
+margin-right: 20px;
+}
+.picture img {
+max-width: 100%;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+.caption {
+color: #ccc;
+font-size: 15;
+text-align: center;
+}
+h1, h2, h3, h4, h5, h6, h7 {
+line-height: 1.0;
+color: white;
+margin-top: 60px;
+margin-bottom: 0px;
+}
+
+</style>
+</head>
+<body><div id="container">
+<h1>md2html</h1>
+
+<p>Converts Markdown into a single, self-contained HTML file.</p>
+
+<h2>Features</h2>
+
+<ul>
+<li>No external dependencies. Images and CSS are inline.</li>
+<li>Simple. No configuration... But you cannot customise the output.</li>
+</ul>
+
+<h2>Usage</h2>
+
+<p>Expects a markdown file as an argument and returns html on stdout or writes it to the second argument.</p>
+
+<pre><code>md2html MARKDOWN_FILE [HTML_FILE]
+</code></pre>
+</div></body>
+</html>

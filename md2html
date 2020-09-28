@@ -113,4 +113,9 @@ DOCUMENT_DIR = File.dirname(ARGV[0])
 embed_images
 decorate
 
-puts @doc
+case ARGV.length
+when 1
+  puts @doc
+when 2
+  File.open(ARGV[1],'w') { |f| f.puts @doc }
+end

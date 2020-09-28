@@ -11,7 +11,7 @@ Converts Markdown into a single, self-contained HTML file.
 
 ## Usage
 
-Expects markdown on stdin and returns html on stdout.
+Expects a markdown file as an argument and returns html on stdout or writes it to the second argument.
 
-    md2html < [MARKDOWN_FILE]
+    md2html MARKDOWN_FILE [HTML_FILE]
 
