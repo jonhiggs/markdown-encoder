@@ -30,16 +30,19 @@ def css
       line-height: 1.8;
     }
 
-    pre {
-      margin-left: 20px;
+    .code {
+      padding-left: 20px;
+      padding-bottom: 20px;
+      background-color: #222;
+      font-size: 18;
       line-height: 1.0;
+      line-height: 1.0;
+      width: 100%;
     }
 
     code {
       white-space: pre;
-      line-height: 1.0;
-      margin-left: 20px;
-      font-size: 18;
+      overflow: scroll;
     }
 
     .picture {
@@ -81,6 +84,10 @@ def decorate
     i = i.wrap('<div class="picture">')
     alt = i.attributes["alt"].value
     i.parent.add_child('<div class="caption">' + alt + '</div>')
+  end
+  @doc.xpath("//code").each do |c|
+    c.content.strip
+    c.parent.add_class("code")
   end
 end
 
