@@ -1,6 +1,13 @@
 # md2html
 
-Converts a Markdown file into single HTML file containing its style and inline base64 encoded images.
+Converts Markdown into a single, self-contained HTML file.
+
+
+## Features
+
+- No external dependencies. Images and CSS are inline.
+- Simple. No configuration... But you cannot customise the output.
+
 
 ## Usage
 

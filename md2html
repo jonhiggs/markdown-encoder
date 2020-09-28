@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
-
 require 'pathname'
-require 'byebug'
 require 'nokogiri'
 require 'redcarpet'
 require 'base64'
